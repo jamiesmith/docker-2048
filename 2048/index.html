@@ -77,11 +77,66 @@
     </p>
     <hr>
     <p>
-    <strong class="important">Note:</strong> This site is the official version of 2048. You can play it on your phone via <a href="http://git.io/2048">http://git.io/2048.</a> All other apps or sites are derivatives or fakes, and should be used with caution.
+    Created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
     </p>
     <hr>
     <p>
-    Created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
+    <strong class="important">Note:</strong> This site is based on the official version of 2048, modified to show <a href="http://docs.apcera.com/jobs/templates/">Apcera Templates.</a>		
+    </p>
+    <hr>
+    <p>
+			scalars:
+			<blockquote>
+				uuid: {{uuid}}<br>
+				name: {{name}}<br>
+				num_instances: {{num_instances}}<br>
+				cpu: {{cpu}}<br>
+				memory: {{memory}}<br>
+				disk: {{disk}}<br>
+				port: {{port}}
+			</blockquote>
+			
+			env_map:
+			<blockquote>
+				{{range $key, $val := env_map}}
+					{{$key}}={{$val}}<br>
+				{{end}}
+			</blockquote>
+			
+			tags:
+			<blockquote>
+				{{range tags}}
+				  {{.Name}}: {{.Value}}<br>
+				{{end}}
+			</blockquote>
+			
+			routes:
+			<blockquote>
+				{{range routes}}
+				  URL: {{.URL}}<br>
+				{{if .Public}}
+				  Port: {{.ListenPort}}<br>
+				{{else}}
+				  UpdatePort: {{.ListenPort}}<br>
+				{{end}}
+				{{end}}
+			</blockquote>
+			bindings:
+			<blockquote>
+				{{range bindings}}
+				  Name: {{.Name}}<br>
+				  Provider: {{.Provider}}<br>
+				  Service: {{.Service}}<br>
+				  URI: {{.URI}}<br>
+				    scheme={{.URI.Scheme}}<br>
+				    user={{.URI.User}}<br>
+				    password={{.URI.Password}}<br>
+				    host={{.URI.Host}}<br>
+				    port={{.URI.Port}}<br>
+				    path={{.URI.Path}}<br>
+				    raw_query={{.URI.RawQuery}}<br>
+				{{end}}
+		</blockquote>
     </p>
   </div>
 

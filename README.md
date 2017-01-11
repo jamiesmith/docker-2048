@@ -4,11 +4,11 @@ simple is better
 
 a smaller docker version of 2048
 
-Base on gabrielecirulli/2048(https://github.com/gabrielecirulli/2048)
+Based on alexwhen/docker-2048(https://github.com/alexwhen/docker-2048)
 
-Base on alpine
+Based on alpine
 
-Base on nginx
+using nginx
 
 #dockerfile
 
@@ -19,6 +19,7 @@ Base on nginx
     RUN apk --update add nginx
 
     COPY 2048 /usr/share/nginx/html
+	ADD TEMPLATES /TEMPLATES
 
     EXPOSE 80
 
@@ -26,13 +27,13 @@ Base on nginx
 
 # run the docker container with your own build
 
-    git clone https://github.com/alexwhen/docker-2048.git
+    git clone https://github.com/jamiesmith/docker-2048.git
     docker build -t "docker-2048" .
     docker run -d -p 8080:80 docker-2048
 
 # run the docker container by pulling the image directly
 
-    docker run -d -p 8080:80 alexwhen/docker-2048
+    docker run -d -p 8080:80 jamiesmith/docker-2048
 
 # Access the game
 
