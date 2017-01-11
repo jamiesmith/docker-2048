@@ -12,33 +12,40 @@ using nginx
 
 #dockerfile
 
-    FROM alpine:latest
+	FROM alpine:latest
 
-    MAINTAINER alex <alexwhen@gmail.com>
+	MAINTAINER alex <alexwhen@gmail.com> 
 
-    RUN apk --update add nginx
+	RUN apk --update add nginx
 
-    COPY 2048 /usr/share/nginx/html
-	ADD TEMPLATES /TEMPLATES
+	COPY 2048 /usr/share/nginx/html
 
-    EXPOSE 80
+	RUN mkdir -p /run/nginx/ && \
+		chmod a+w /run/nginx/ && \
+		mkdir -p /usr/share/nginx/logs && \
+		chmod a+w /usr/share/nginx/logs
 
-    CMD ["nginx", "-g", "daemon off;"]
+	RUN cp /usr/share/nginx/html/TEMPLATES / && \
+		for file in $(cat /TEMPLATES); do touch "$file"; done
 
-# run the docker container with your own build
+	EXPOSE 80
 
-    git clone https://github.com/jamiesmith/docker-2048.git
-    docker build -t "docker-2048" .
-    docker run -d -p 8080:80 docker-2048
+	CMD ["nginx", "-p", "/usr/share/nginx", "-g", "daemon off;"]
 
-# run the docker container by pulling the image directly
 
-    docker run -d -p 8080:80 jamiesmith/docker-2048
+# Rebuild and push the docker container
+
+	docker build -t "docker-2048" .
+	curtag=$(docker images | grep ^docker-2048| awk '{print $3}')
+	docker tag ${curtag} jamiesmithnc/docker-2048:latest
+	docker push jamiesmithnc/docker-2048
+
+# Pull & Run on apcera
+
+	apc app delete game-jamie -q
+	apc docker run game-jamie --image jamiesmithnc/docker-2048 --port 80 --routes http://game.demo.proveapcera.io
 
 # Access the game
 
-    http://127.0.0.1:8080
-
-If you run docker with boot2docker on Mac or Windows, the URL should be:
- 
-    http://192.168.59.103:8080
+	open http://game.demo.proveapcera.io
+	(or just click the link)
